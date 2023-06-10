@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio tres, actividad uno</title>
+
+</head>
+<body>
+    <script>
+        let cantidadEstudiantes = prompt("Ingrese la cantidad de estudiantes: ");
+            const dataset = []
+
+        const ingresarEstudiantes = (() => {
+            let nombre = prompt("Ingrese el primer nombre: ")
+            let CI = prompt("Ingrese la cédula: ")
+            let notaFisica = parseFloat(prompt("Ingrese la nota de Física: "))
+            let notaMate = parseFloat(prompt("Ingrese la nota de Matemáticas: "))
+            let notaProgramacion = parseFloat(prompt("Ingrese la nota de Programación: "))
+
+            const data = {
+                nombreEstudiante: nombre,
+                Cedula: CI,
+                materias: [
+        {
+            nombreMateria: 'Fisica',
+            nota: notaFisica
+            },
+        {
+            nombreMateria: 'Matematica',
+            nota: notaMate
+            },
+        { 
+            nombreMateria: 'Programacion',
+            nota: notaProgramacion
+            },
+        ]   
+    }
+
+    return data;
+})
+
+//El objeto se inyecta en el array vacio de estudiantes
+
+    for (let index = 0; index < cantidadEstudiantes; index++) {
+        dataset.push(ingresarEstudiantes())
+}
+
+//Nota promedio de cada materia
+
+    for (let index = 0; index < 3; index++) {
+        let promCadaMateria = dataset.map(estudiante => estudiante.materias[index].nota)
+            .reduce((nota, acumulador = 0) => acumulador += nota)
+
+        let nombreMateria = dataset.map((estudiante) => estudiante.materias[index].nombreMateria)
+            console.log(`El promedio de ${nombreMateria[0]} es de: ${promCadaMateria / dataset.length} pts`);
+    }
+
+//Nota máxima por materia
+
+    for (let index = 0; index < 3; index++) {
+        let notaMaximaPorMateria = dataset.map(estudiante => estudiante.materias[index].nota)
+            .sort((a, b) => {
+                return a - b
+                    }).slice(-1)
+
+        let nombreMateria = dataset.map((estudiante) => estudiante.materias[index].nombreMateria)
+            console.log(`Las nota maxima de ${nombreMateria[0]} ${notaMaximaPorMateria}`);
+    }
+
+//Obtener la cantidad de materias aprobadas de cada estudiante
+
+    const materiasAprobadas = dataset.map(estudiante => {
+        return estudiante.materias.filter((materia) => materia.nota >= 10).length
+})
+
+    const nombreEstudiante = dataset.map(estudiante => estudiante.nombreEstudiante)
+        for (let index = 0; index < dataset.length; index++) {
+            console.log(`El estudiante ${nombreEstudiante[index]} aprobó ${materiasAprobadas[index]} materias`);
+                }
+
+//Aquí se accede al array de materias y se extrae la longitud de cada sub-array
+//Dependiendo de la longitud de cada sub-array será la cantidad de materias aprobadas
+
+    const ningunaMateriaAprobada = materiasAprobadas.filter(materia => materia === 0)
+    const unaMateriaAprobada = materiasAprobadas.filter(materia => materia === 1)
+    const dosMateriasAprobadas = materiasAprobadas.filter(materia => materia === 2)
+    const todasMateriasAprobadas = materiasAprobadas.filter((materia) => materia === 3)
+
+    console.log('Alumnos que reprobaron todas las materia: ', ningunaMateriaAprobada.length);
+    console.log('Alumnos que aprobaron una materia: ', unaMateriaAprobada.length);
+    console.log('Alumnos que aprobaron dos materias: ', dosMateriasAprobadas.length);
+    console.log('Alumnos que aprobaron todas las materias: ', todasMateriasAprobadas.length);
+
+</script>
+</body>
+</html>
